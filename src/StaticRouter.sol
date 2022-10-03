@@ -1,13 +1,16 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
+import { ICounter } from './ICounter.sol';
+
 import { Data } from './Data.sol';
 import { Fat } from './Fat.sol';
 
-contract Router {
+contract StaticRouter {
     error UnknownSelector(bytes4 sel);
 
-    address private constant _SETTINGS_MODULE = 0x5FbDB2315678afecb367f032d93F642f64180aa3;
+    // calculated precompile time
+    address private constant _COUNTER_MODULE = 0x70BEce5a3D1a6eFBC54e1A134cfF3b47EF346bbE;
 
     fallback() external payable {
         _forward();
@@ -27,10 +30,8 @@ contract Router {
 
             function findImplementation(sig) -> result {
                 switch sig
-                case 0xd1b6c504 { result := _SETTINGS_MODULE } // SNXTokenModule.getSNXTokenAddress()
-                case 0xf4c4dc31 { result := _SETTINGS_MODULE } // SynthsModule.getSynthsModuleSatellites()
-                case 0xf5d6f068 { result := _SETTINGS_MODULE } // SNXTokenModule.initializeSNXTokenModule()
-                case 0xfbc6aa6f { result := _SETTINGS_MODULE } // SynthsModule.initializeSynthsModule()
+                case 0x60fe47b1 { result := _COUNTER_MODULE } // _COUNTER_MODULE.set
+                case 0x6d4ce63c { result := _COUNTER_MODULE } // _COUNTER_MODULE.get
                 leave
             }
 
@@ -59,20 +60,20 @@ contract Router {
     }
 }
 
-contract SettingsStorage {
-  function _settingsStore() internal pure returns (Data storage store) {
-    bytes32 slot = bytes32(uint(keccak256("io.synthetix.settings")) - 1);
+contract CounterStorage {
+  function _store() internal pure returns (Data storage store) {
+    bytes32 slot = bytes32(uint(keccak256("ylv.counter")) - 1);
     assembly {
       store.slot := slot
     }
   }
 }
 
-contract SettingsModule is SettingsStorage {
+contract CounterModule is CounterStorage, ICounter {
     function set(uint value)
         external
     {
-        _settingsStore().counter = value;
+        _store().counter = value;
     }
 
     function get()
@@ -80,6 +81,6 @@ contract SettingsModule is SettingsStorage {
         view
         returns (uint)
     {
-        return _settingsStore().counter;
+        return _store().counter;
     }
 }
