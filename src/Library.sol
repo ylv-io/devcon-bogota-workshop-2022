@@ -55,6 +55,11 @@ contract ExternalLibrary is Fat {
         // "instance" will be the current contract.
         require(Set.insert(data, value));
     }
+
+    function check(uint value) external returns (bool) {
+        return Set.contains(data, value);
+    }
+
     // In this contract, we can also directly access data.flags, if we want.
 
     // Uncomment these functions to see that there is not enough space for them
