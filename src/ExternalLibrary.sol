@@ -15,7 +15,7 @@ library Storage {
     // to call the first parameter `self`, if the function can
     // be seen as a method of that object.
     function set(Data storage self, uint value)
-        external
+        public
     {
         self.counter = value;
     }
@@ -40,7 +40,7 @@ contract ExternalLibrary is Fat, ICounter {
         Storage.set(data, value);
     }
 
-    function get() external view returns (uint) {
+    function get() public view returns (uint) {
         return Storage.get(data);
     }
 

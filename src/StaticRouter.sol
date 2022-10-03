@@ -71,13 +71,13 @@ contract CounterStorage {
 
 contract CounterModule is CounterStorage, ICounter {
     function set(uint value)
-        external
+        public
     {
         _store().counter = value;
     }
 
     function get()
-        external
+        public
         view
         returns (uint)
     {
