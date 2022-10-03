@@ -33,19 +33,39 @@ contract SizeTest is Test {
         DynamicRouter(payable(address(dynamicRouter))).updateModules(modules);
     }
 
+    // Counter
     function testCounter() public {
         counter.set(42);
         assertEq(counter.get(), 42);
     }
 
+    function testCounterGet() public {
+        assertEq(counter.get(), 0);
+    }
+
+    // ExternalLibrary
     function testLibrary() public {
         lib.set(42);
         assertEq(lib.get(), 42);
     }
 
+    function testLibraryGet() public {
+        assertEq(lib.get(), 0);
+    }
+
+    // StaticRouter
     function testStaticRouter() public {
         staticRouter.set(42);
         assertEq(staticRouter.get(), 42);
+    }
+
+    function testStaticRouterGet() public {
+        assertEq(staticRouter.get(), 0);
+    }
+
+    // DynamicRouter
+    function testDynamicRouterGet() public {
+        assertEq(dynamicRouter.get(), 0);
     }
 
     function testDynamicRouter() public {
