@@ -1,47 +1,29 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
+import { Data } from './Data.sol';
 import { Fat } from './Fat.sol';
 
-// We define a new struct datatype that will be used to
-// hold its data in the calling contract.
-struct Data {
-    mapping(uint => bool) flags;
-}
 
-library Set {
+library Storage {
     // Note that the first parameter is of type "storage
     // reference" and thus only its storage address and not
     // its contents is passed as part of the call.  This is a
     // special feature of library functions.  It is idiomatic
     // to call the first parameter `self`, if the function can
     // be seen as a method of that object.
-    function insert(Data storage self, uint value)
-        public
-        returns (bool)
+    function set(Data storage self, uint value)
+        external
     {
-        if (self.flags[value])
-            return false; // already there
-        self.flags[value] = true;
-        return true;
+        self.counter = value;
     }
 
-    function remove(Data storage self, uint value)
-        public
-        returns (bool)
-    {
-        if (!self.flags[value])
-            return false; // not there
-        self.flags[value] = false;
-        return true;
-    }
-
-    function contains(Data storage self, uint value)
+    function get(Data storage self)
         public
         view
-        returns (bool)
+        returns (uint)
     {
-        return self.flags[value];
+        return self.counter;
     }
 }
 
@@ -49,46 +31,19 @@ library Set {
 contract ExternalLibrary is Fat {
     Data private data;
 
-    function register(uint value) public {
+    function set(uint value) public {
         // The library functions can be called without a
         // specific instance of the library, since the
         // "instance" will be the current contract.
-        require(Set.insert(data, value));
+        Storage.set(data, value);
     }
 
-    function check(uint value) external returns (bool) {
-        return Set.contains(data, value);
+    function get() external view returns (uint) {
+        return Storage.get(data);
     }
 
     // In this contract, we can also directly access data.flags, if we want.
 
     // Uncomment these functions to see that there is not enough space for them
     // in this contract
-    //function insert(uint value)
-    //    public
-    //    returns (bool)
-    //{
-    //    if (data.flags[value])
-    //        return false; // already there
-    //    data.flags[value] = true;
-    //    return true;
-    //}
-
-    //function remove(uint value)
-    //    public
-    //    returns (bool)
-    //{
-    //    if (!data.flags[value])
-    //        return false; // not there
-    //    data.flags[value] = false;
-    //    return true;
-    //}
-
-    //function contains(uint value)
-    //    public
-    //    view
-    //    returns (bool)
-    //{
-    //    return data.flags[value];
-    //}
 }

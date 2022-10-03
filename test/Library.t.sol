@@ -12,7 +12,7 @@ contract LibraryTest is Test {
     }
 
     function testRegister() public {
-        lib.register(42);
-        assertEq(lib.check(42), true);
+        lib.set(42);
+        assertEq(lib.get(), 42);
     }
 }
