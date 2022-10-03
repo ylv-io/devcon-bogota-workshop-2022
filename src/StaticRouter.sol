@@ -10,7 +10,7 @@ contract StaticRouter {
     error UnknownSelector(bytes4 sel);
 
     // calculated precompile time
-    address private constant _COUNTER_MODULE = 0x70BEce5a3D1a6eFBC54e1A134cfF3b47EF346bbE;
+    address private constant _COUNTER_MODULE = 0xbd748c717Ca30862991DC44AAf0B4db9F8DE12dA;
 
     fallback() external payable {
         _forward();
