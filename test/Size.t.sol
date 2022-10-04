@@ -10,18 +10,23 @@ import "../src/ExternalLibrary.sol";
 import "../src/StaticRouter.sol";
 import "../src/DynamicRouter.sol";
 import "../src/CounterModule.sol";
+import "../src/BigModule.sol";
 
 contract SizeTest is Test {
     Counter public counter;
-    ExternalLibrary public lib;
+    ExternalLibraryCounter public libCounter;
     ICounter public staticRouter;
     CounterModule public counterModule;
+    BigModule public bigModule;
     ICounter public dynamicRouter;
 
     function setUp() public {
-        lib = new ExternalLibrary();
-        counter = new Counter();
         counterModule = new CounterModule();
+        console.log(address(counterModule));
+        bigModule = new BigModule();
+
+        libCounter = new ExternalLibraryCounter();
+        counter = new Counter();
         staticRouter = (ICounter)((address)(new StaticRouter()));
         dynamicRouter = (ICounter)((address)(new DynamicRouter()));
         // set the counter module on dynamic router
@@ -44,14 +49,15 @@ contract SizeTest is Test {
         assertEq(counter.get(), 0);
     }
 
-    // ExternalLibrary
+    // ExternalLibraryCounter
     function testLibrary() public {
-        lib.set(42);
-        assertEq(lib.get(), 42);
+        libCounter.set(42);
+        assertEq(libCounter.get(), 42);
+        assertTrue(bytes(libCounter.quote()).length != 0);
     }
 
     function testLibraryGet() public {
-        assertEq(lib.get(), 0);
+        assertEq(libCounter.get(), 0);
     }
 
     // StaticRouter
