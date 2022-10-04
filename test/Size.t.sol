@@ -9,6 +9,7 @@ import "../src/Counter.sol";
 import "../src/ExternalLibrary.sol";
 import "../src/StaticRouter.sol";
 import "../src/DynamicRouter.sol";
+import "../src/CounterModule.sol";
 
 contract SizeTest is Test {
     Counter public counter;
