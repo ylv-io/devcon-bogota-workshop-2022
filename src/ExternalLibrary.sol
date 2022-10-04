@@ -4,16 +4,10 @@ pragma solidity ^0.8.13;
 import { ICounter } from './ICounter.sol';
 
 import { Data } from './Data.sol';
-import { Fat } from './Fat.sol';
+import { BigModule } from './BigModule.sol';
 
 
 library Storage {
-    // Note that the first parameter is of type "storage
-    // reference" and thus only its storage address and not
-    // its contents is passed as part of the call.  This is a
-    // special feature of library functions.  It is idiomatic
-    // to call the first parameter `self`, if the function can
-    // be seen as a method of that object.
     function set(Data storage self, uint value)
         public
     {
@@ -30,7 +24,7 @@ library Storage {
 }
 
 
-contract ExternalLibrary is Fat, ICounter {
+contract ExternalLibrary is BigModule, ICounter {
     Data private data;
 
     function set(uint value) public {

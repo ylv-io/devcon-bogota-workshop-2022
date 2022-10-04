@@ -4,7 +4,7 @@ pragma solidity ^0.8.13;
 import { ICounter } from './ICounter.sol';
 
 import { Data } from './Data.sol';
-import { Fat } from './Fat.sol';
+import { BigModule } from './BigModule.sol';
 
 struct ModuleDefinition {
     address implementation;
