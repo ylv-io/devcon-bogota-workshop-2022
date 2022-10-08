@@ -4,10 +4,9 @@ pragma solidity ^0.8.13;
 import { ICounter } from './ICounter.sol';
 
 import { Data } from './Data.sol';
-import { BigModule } from './BigModule.sol';
 import { CounterModule } from './CounterModule.sol';
-import { StaticRouter } from './StaticRouter.sol';
+import { BigModule } from './BigModule.sol';
+import { DynamicRouter } from './DynamicRouter.sol';
 
-contract LoadedStaticRouter is CounterModule, StaticRouter {
+contract LoadedDynamicRouter is CounterModule, DynamicRouter {
 }
-
