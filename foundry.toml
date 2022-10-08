@@ -1,5 +1,6 @@
 [profile.default]
-gas_reports = ["Counter", "ExternalLibrary", "StaticRouter", "DynamicRouter"]
+gas_reports = ["Counter", "ExternalLibraryCounter", "StaticRouter", "DynamicRouter",
+"BigModule"]
 src = 'src'
 out = 'out'
 libs = ['lib']

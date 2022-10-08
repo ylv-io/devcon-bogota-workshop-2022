@@ -39,6 +39,11 @@ contract SizeTest is Test {
         DynamicRouter(payable(address(dynamicRouter))).updateModules(modules);
     }
 
+    // Big
+    function testBig() public {
+        assertTrue(bytes(bigModule.quote()).length != 0);
+    }
+
     // Counter
     function testCounter() public {
         counter.set(42);
