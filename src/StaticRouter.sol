@@ -12,6 +12,7 @@ contract StaticRouter {
 
     // calculated precompile time
     address private constant _COUNTER_MODULE = 0xDb933C92ccafDe43B11D8693c22FEedbD65B7a25;
+    address private constant _BIG_MODULE = 0xc94Cf1a6D4b8a25e424b3Ed8792eed1F1B95B86e;
 
     fallback() external payable {
         _forward();
@@ -33,6 +34,7 @@ contract StaticRouter {
                 switch sig
                 case 0x60fe47b1 { result := _COUNTER_MODULE } // _COUNTER_MODULE.set
                 case 0x6d4ce63c { result := _COUNTER_MODULE } // _COUNTER_MODULE.get
+                case 0x999b93af { result := _BIG_MODULE } // _BIG_MODULE.quote
                 leave
             }
 

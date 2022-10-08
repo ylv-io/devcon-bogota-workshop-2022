@@ -4,6 +4,7 @@ pragma solidity ^0.8.13;
 import "forge-std/Test.sol";
 
 import "../src/ICounter.sol";
+import "../src/IBig.sol";
 
 import "../src/Counter.sol";
 import "../src/ExternalLibrary.sol";
@@ -22,7 +23,6 @@ contract SizeTest is Test {
 
     function setUp() public {
         counterModule = new CounterModule();
-        console.log(address(counterModule));
         bigModule = new BigModule();
 
         libCounter = new ExternalLibraryCounter();
@@ -64,6 +64,7 @@ contract SizeTest is Test {
     function testStaticRouter() public {
         staticRouter.set(42);
         assertEq(staticRouter.get(), 42);
+        assertTrue(bytes(IBig(address(staticRouter)).quote()).length != 0);
     }
 
     function testStaticRouterGet() public {
