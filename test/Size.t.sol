@@ -31,11 +31,16 @@ contract SizeTest is Test {
         dynamicRouter = (ICounter)((address)(new DynamicRouter()));
         // set the counter module on dynamic router
         // boy, this is ugly
-        bytes4[] memory selectors = new bytes4[](2);
-        selectors[0] = ICounter.get.selector;
-        selectors[1] = ICounter.set.selector;
-        ModuleDefinition[] memory modules = new ModuleDefinition[](1);
-        modules[0] = ModuleDefinition({implementation: address(counterModule), selectors: selectors });
+        bytes4[] memory counterSelectors = new bytes4[](2);
+        counterSelectors[0] = ICounter.get.selector;
+        counterSelectors[1] = ICounter.set.selector;
+        bytes4[] memory bigSelectors = new bytes4[](1);
+        bigSelectors[0] = IBig.quote.selector;
+        ModuleDefinition[] memory modules = new ModuleDefinition[](2);
+        modules[0] = ModuleDefinition({implementation: address(counterModule),
+                                      selectors: counterSelectors });
+        modules[1] = ModuleDefinition({implementation: address(bigModule),
+                                      selectors: bigSelectors });
         DynamicRouter(payable(address(dynamicRouter))).updateModules(modules);
     }
 
@@ -84,5 +89,6 @@ contract SizeTest is Test {
     function testDynamicRouter() public {
         dynamicRouter.set(42);
         assertEq(dynamicRouter.get(), 42);
+        assertTrue(bytes(IBig(address(dynamicRouter)).quote()).length != 0);
     }
 }
