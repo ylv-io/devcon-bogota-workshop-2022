@@ -3,6 +3,7 @@ pragma solidity ^0.8.13;
 
 interface ICounter {
     function set(uint256 newVal) external;
-    function get() external view returns (uint) ;
+    function get() external view returns (uint);
+    function const() external pure returns (uint);
 }
 

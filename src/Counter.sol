@@ -19,7 +19,7 @@ contract Counter is ICounter {
         return val;
     }
 
-    function quote() external pure  returns (string memory) {
-        return '';
+    function const() external pure returns (uint256) {
+        return 18;
     }
 }

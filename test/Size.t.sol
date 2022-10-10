@@ -35,9 +35,10 @@ contract SizeTest is Test {
         dynamicRouter = (ICounter)((address)(new DynamicRouter()));
         // set the counter module on dynamic router
         // boy, this is ugly
-        bytes4[] memory counterSelectors = new bytes4[](2);
+        bytes4[] memory counterSelectors = new bytes4[](3);
         counterSelectors[0] = ICounter.get.selector;
         counterSelectors[1] = ICounter.set.selector;
+        counterSelectors[2] = ICounter.const.selector;
         bytes4[] memory bigSelectors = new bytes4[](1);
         bigSelectors[0] = IBig.quote.selector;
         ModuleDefinition[] memory modules = new ModuleDefinition[](2);
@@ -61,7 +62,7 @@ contract SizeTest is Test {
     // Counter
     function testCounter() public {
         counter.set(42);
-        assertEq(counter.get(), 42);
+        assertEq(counter.const(), 18);
     }
 
     function testCounterGet() public {
@@ -71,8 +72,11 @@ contract SizeTest is Test {
     // ExternalLibraryCounter
     function testLibrary() public {
         libCounter.set(42);
-        assertEq(libCounter.get(), 42);
         assertTrue(bytes(libCounter.quote()).length != 0);
+    }
+
+    function testLibraryConst() public {
+        assertEq(libCounter.const(), 18);
     }
 
     function testLibraryGet() public {
@@ -82,7 +86,6 @@ contract SizeTest is Test {
     // StaticRouter
     function testStaticRouter() public {
         staticRouter.set(42);
-        assertEq(staticRouter.get(), 42);
         assertTrue(bytes(IBig(address(staticRouter)).quote()).length != 0);
     }
 
@@ -90,10 +93,13 @@ contract SizeTest is Test {
         assertEq(staticRouter.get(), 0);
     }
 
+    function testStaticRouterConst() public {
+        assertEq(staticRouter.const(), 18);
+    }
+
     // DynamicRouter
     function testDynamicRouter() public {
         dynamicRouter.set(42);
-        assertEq(dynamicRouter.get(), 42);
         assertTrue(bytes(IBig(address(dynamicRouter)).quote()).length != 0);
     }
 
@@ -101,10 +107,13 @@ contract SizeTest is Test {
         assertEq(dynamicRouter.get(), 0);
     }
 
+    function testDynamicRouterConst() public {
+        assertEq(dynamicRouter.const(), 18);
+    }
+
     // LoadedStaticRouter
     function testLoadedStaticRouter() public {
         loadedStaticRouter.set(42);
-        assertEq(loadedStaticRouter.get(), 42);
         assertTrue(bytes(IBig(address(loadedStaticRouter)).quote()).length != 0);
     }
 
@@ -112,14 +121,21 @@ contract SizeTest is Test {
         assertEq(loadedStaticRouter.get(), 0);
     }
 
+    function testLoadedStaticRouterConst() public {
+        assertEq(loadedStaticRouter.const(), 18);
+    }
+
     // LoadedDynamicRouter
     function testLoadedDynamicRouter() public {
         loadedDynamicRouter.set(42);
-        assertEq(loadedDynamicRouter.get(), 42);
         assertTrue(bytes(IBig(address(loadedDynamicRouter)).quote()).length != 0);
     }
 
     function testLoadedDynamicRouterGet() public {
         assertEq(loadedDynamicRouter.get(), 0);
+    }
+
+    function testLoadedDynamicRouterConst() public {
+        assertEq(loadedDynamicRouter.const(), 18);
     }
 }

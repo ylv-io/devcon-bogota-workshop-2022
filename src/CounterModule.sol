@@ -27,4 +27,8 @@ contract CounterModule is CounterStorage, ICounter {
     {
         return _counterStorage().counter;
     }
+
+    function const() external pure returns (uint256) {
+        return 18;
+    }
 }

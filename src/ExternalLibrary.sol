@@ -25,6 +25,9 @@ contract ExternalLibraryCounter is ICounter {
         return QuoteLib.quote();
     }
 
+    function const() external pure returns (uint256) {
+        return StorageLib.const();
+    } 
     // In this contract, we can also directly access data.flags, if we want.
 }
 
@@ -42,6 +45,10 @@ library StorageLib {
     {
         return self.counter;
     }
+
+    function const() external pure returns (uint256) {
+        return 18;
+    } 
 }
 
 

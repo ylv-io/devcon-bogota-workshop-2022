@@ -34,6 +34,7 @@ contract StaticRouter {
                 switch sig
                 case 0x60fe47b1 { result := _COUNTER_MODULE } // _COUNTER_MODULE.set
                 case 0x6d4ce63c { result := _COUNTER_MODULE } // _COUNTER_MODULE.get
+                case 0x3b80a793 { result := _COUNTER_MODULE } // _COUNTER_MODULE.const
                 case 0x999b93af { result := _BIG_MODULE } // _BIG_MODULE.quote
                 leave
             }
