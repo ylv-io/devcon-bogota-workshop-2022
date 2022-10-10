@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-import { ICounter } from './ICounter.sol';
+import { ICounter, BigStruct } from './ICounter.sol';
 import { BigModule } from './BigModule.sol';
+
 
 contract Counter is ICounter {
     uint256 public val;
@@ -21,5 +22,8 @@ contract Counter is ICounter {
 
     function const() external pure returns (uint256) {
         return 18;
+    }
+
+    function complex(BigStruct[] memory data) external pure  {
     }
 }

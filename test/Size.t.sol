@@ -24,6 +24,7 @@ contract SizeTest is Test {
     CounterModule public counterModule;
     BigModule public bigModule;
     ICounter public dynamicRouter;
+    BigStruct[] public bigStructArray;
 
     function setUp() public {
         counterModule = new CounterModule();
@@ -35,10 +36,11 @@ contract SizeTest is Test {
         dynamicRouter = (ICounter)((address)(new DynamicRouter()));
         // set the counter module on dynamic router
         // boy, this is ugly
-        bytes4[] memory counterSelectors = new bytes4[](3);
+        bytes4[] memory counterSelectors = new bytes4[](4);
         counterSelectors[0] = ICounter.get.selector;
         counterSelectors[1] = ICounter.set.selector;
         counterSelectors[2] = ICounter.const.selector;
+        counterSelectors[3] = ICounter.complex.selector;
         bytes4[] memory bigSelectors = new bytes4[](1);
         bigSelectors[0] = IBig.quote.selector;
         ModuleDefinition[] memory modules = new ModuleDefinition[](2);
@@ -52,6 +54,11 @@ contract SizeTest is Test {
         DynamicRouter(payable(address(loadedDynamicRouter))).updateModules(modules);
 
         loadedStaticRouter = (ICounter)((address)(new LoadedStaticRouter()));
+
+        for (uint256 i = 0; i < 30; i++) {
+            bigStructArray.push(BigStruct({val:i, title: string(abi.encode(i)),
+            flag: i % 2 == 0}));
+        }
     }
 
     // Big
@@ -63,6 +70,7 @@ contract SizeTest is Test {
     function testCounter() public {
         counter.set(42);
         assertEq(counter.const(), 18);
+        counter.complex(bigStructArray);
     }
 
     function testCounterGet() public {
@@ -73,6 +81,7 @@ contract SizeTest is Test {
     function testLibrary() public {
         libCounter.set(42);
         assertTrue(bytes(libCounter.quote()).length != 0);
+        libCounter.complex(bigStructArray);
     }
 
     function testLibraryConst() public {
@@ -87,6 +96,7 @@ contract SizeTest is Test {
     function testStaticRouter() public {
         staticRouter.set(42);
         assertTrue(bytes(IBig(address(staticRouter)).quote()).length != 0);
+        staticRouter.complex(bigStructArray);
     }
 
     function testStaticRouterGet() public {
@@ -101,6 +111,7 @@ contract SizeTest is Test {
     function testDynamicRouter() public {
         dynamicRouter.set(42);
         assertTrue(bytes(IBig(address(dynamicRouter)).quote()).length != 0);
+        dynamicRouter.complex(bigStructArray);
     }
 
     function testDynamicRouterGet() public {
@@ -115,6 +126,7 @@ contract SizeTest is Test {
     function testLoadedStaticRouter() public {
         loadedStaticRouter.set(42);
         assertTrue(bytes(IBig(address(loadedStaticRouter)).quote()).length != 0);
+        loadedStaticRouter.complex(bigStructArray);
     }
 
     function testLoadedStaticRouterGet() public {
@@ -129,6 +141,7 @@ contract SizeTest is Test {
     function testLoadedDynamicRouter() public {
         loadedDynamicRouter.set(42);
         assertTrue(bytes(IBig(address(loadedDynamicRouter)).quote()).length != 0);
+        loadedDynamicRouter.complex(bigStructArray);
     }
 
     function testLoadedDynamicRouterGet() public {
