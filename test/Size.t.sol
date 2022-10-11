@@ -59,6 +59,13 @@ contract SizeTest is Test {
             bigStructArray.push(BigStruct({val:i, title: string(abi.encode(i)),
             flag: i % 2 == 0}));
         }
+
+        libCounter.set(42);
+        counter.set(42);
+        staticRouter.set(42);
+        dynamicRouter.set(42);
+        loadedStaticRouter.set(42);
+        loadedDynamicRouter.set(42);
     }
 
     // Big
@@ -74,7 +81,7 @@ contract SizeTest is Test {
     }
 
     function testCounterGet() public {
-        assertEq(counter.get(), 0);
+        assertEq(counter.get(), 42);
     }
 
     // ExternalLibraryCounter
@@ -89,7 +96,7 @@ contract SizeTest is Test {
     }
 
     function testLibraryGet() public {
-        assertEq(libCounter.get(), 0);
+        assertEq(libCounter.get(), 42);
     }
 
     // StaticRouter
@@ -100,7 +107,7 @@ contract SizeTest is Test {
     }
 
     function testStaticRouterGet() public {
-        assertEq(staticRouter.get(), 0);
+        assertEq(staticRouter.get(), 42);
     }
 
     function testStaticRouterConst() public {
@@ -115,7 +122,7 @@ contract SizeTest is Test {
     }
 
     function testDynamicRouterGet() public {
-        assertEq(dynamicRouter.get(), 0);
+        assertEq(dynamicRouter.get(), 42);
     }
 
     function testDynamicRouterConst() public {
@@ -130,7 +137,7 @@ contract SizeTest is Test {
     }
 
     function testLoadedStaticRouterGet() public {
-        assertEq(loadedStaticRouter.get(), 0);
+        assertEq(loadedStaticRouter.get(), 42);
     }
 
     function testLoadedStaticRouterConst() public {
@@ -145,7 +152,7 @@ contract SizeTest is Test {
     }
 
     function testLoadedDynamicRouterGet() public {
-        assertEq(loadedDynamicRouter.get(), 0);
+        assertEq(loadedDynamicRouter.get(), 42);
     }
 
     function testLoadedDynamicRouterConst() public {
