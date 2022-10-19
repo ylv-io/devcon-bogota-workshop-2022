@@ -21,7 +21,8 @@ forge test --gas-report
 ```
 
 ## Slides
-[Google Docs](https://docs.google.com/presentation/d/1USy5Yj5C6miWZQCzilc1FKGzarYTFmF7ZfF7TFeyZOo/edit?usp=sharing)
+
+[Google Docs](https://docs.google.com/presentation/d/1USy5Yj5C6miWZQCzilc1FKGzarYTFmF7ZfF7TFeyZOo/edit?usp=sharing)  
 [Youtube](https://www.youtube.com/watch?v=qzlUNSt5pnA)
 
 ## Disclamer
