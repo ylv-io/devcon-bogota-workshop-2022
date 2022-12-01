@@ -152,7 +152,7 @@ contract SizeTest is Test {
     }
 
     function testLoadedDynamicRouterGet() public {
-        assertEq(loadedDynamicRouter.get(), );
+        assertEq(loadedDynamicRouter.get(), 42);
     }
 
     function testLoadedDynamicRouterConst() public {
